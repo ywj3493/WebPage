@@ -4,10 +4,10 @@ project period : 2022.01.09~2022.03.20( about 2 month except boiler-plate)
 
 ## Portfolio Copy Sample
 
-https://www.inflearn.com/ : simple cardview 
-https://www.airbnb.co.kr/ : awesome detail pages *** personal best option / a little bit hard!
-https://www.coupang.com/  : functional search filter
-https://www.zigbang.com/  : map function
+- https://www.inflearn.com/ : simple cardview 
+- https://www.airbnb.co.kr/ : awesome detail pages *** personal best option / a little bit hard!
+- https://www.coupang.com/  : functional search filter
+- https://www.zigbang.com/  : map function
 
 https://www.portfoliobox.net/kr/examples : awesome portfolio examples
 
