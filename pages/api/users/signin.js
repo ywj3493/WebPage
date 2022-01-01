@@ -4,12 +4,9 @@ import bcrypt from "../../../util/bcrypt";
 
 const handler = async (req, res) => {
   if (req.method === "POST") {
-    console.log("signinhanler");
     const { email, password } = req.body;
-    console.log({ email, password });
     if (email && password) {
       const user = await User.findOne({ email: email });
-      console.log("find user", user);
       if (!user) {
         return res.status(400).json({
           success: false,
@@ -17,7 +14,6 @@ const handler = async (req, res) => {
         });
       } else {
         const isMatch = await bcrypt.comparePassword(password, user.password);
-        console.log("isMatch", isMatch);
         if (isMatch) {
           return res.status(200).json({
             user,

@@ -1,6 +1,8 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import axios from "axios";
+
+//here where all the next auth setting
 export default NextAuth({
   providers: [
     Providers.GitHub({
@@ -27,6 +29,7 @@ export default NextAuth({
       profileUrl: "https://kapi.kakao.com/v2/user/me",
       scope: "account_email profile_nickname profile_image",
     }),
+    //custom login
     Providers.Credentials({
       name: "Custom",
       credentials: {
@@ -35,14 +38,14 @@ export default NextAuth({
       },
 
       async authorize(credentials) {
-        console.log("credentials");
+        //signIn("credentials", {email, password}) => comes here.
         const url = "/api/users/signin";
         const response = await axios.post(`${process.env.NEXTAUTH_URL + url}`, {
           email: credentials.email,
           password: credentials.password,
         });
         if (response) {
-          console.log("response", response);
+          //after finishing any authorize() => call jwt of callback function
           return response.data.user;
         } else {
           return null;
@@ -64,6 +67,7 @@ export default NextAuth({
   },
   database: process.env.MONGO_URL,
   callbacks: {
+    //here comes after provider's authorize =>create jwt & session
     async jwt(token, user, account, profile) {
       console.log(token, user, account, profile);
       if (user) {

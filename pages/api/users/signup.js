@@ -10,10 +10,8 @@ const handler = async (req, res) => {
       try {
         const { name, email, password } = req.body;
         const hashPassword = await bcrypt.hashPassword(password);
-        console.log("hashPassword", hashPassword);
         const newUser = new User({ name, email, password: hashPassword });
         const createdUser = await newUser.save();
-        console.log(createdUser);
         return res.status(200).json({
           success: true,
           msg: "New User Created",

@@ -7,7 +7,10 @@ export default function Private(props) {
     </>
   );
 }
+//important! in next : it called before creation of web page
 export async function getServerSideProps(ctx) {
+  //next-auth saves token and session data in ctx, ctx has all the req, res, session...
+  //by checking authentication here in serverside props you don't have blink in the pages
   const session = await getSession(ctx);
   if (!session) {
     return {
