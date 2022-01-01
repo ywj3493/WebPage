@@ -19,8 +19,8 @@
 4. map
 5. awesom detailpage
 
-1~3 function is must with simple detail page;
-1~5 function will be awesome!!
+- 1~3 function is must with simple detail page
+- 1~5 function will be awesome!!
 
 ## Getting Started
 
