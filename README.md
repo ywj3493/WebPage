@@ -1,6 +1,6 @@
 ## We Will Make AweSome WebPage for Portfolio
-member : choiyongseok , yoonwoongjae
-project period : 2022.01.09~2022.03.20( about 2 month except boiler-plate)
+- member : choiyongseok , yoonwoongjae
+- project period : 2022.01.09~2022.03.20( about 2 month except boiler-plate)
 
 ## Portfolio Copy Sample
 
@@ -9,7 +9,7 @@ project period : 2022.01.09~2022.03.20( about 2 month except boiler-plate)
 - https://www.coupang.com/  : functional search filter
 - https://www.zigbang.com/  : map function
 
-https://www.portfoliobox.net/kr/examples : awesome portfolio examples
+- https://www.portfoliobox.net/kr/examples : awesome portfolio examples
 
 ## Hopeful functions to add
 
