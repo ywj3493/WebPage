@@ -1,7 +1,6 @@
 const testAddFunction = (a, b) => {
   return a + b;
 };
-
 describe("simple test", () => {
   beforeEach(() => {
     temp = true;
