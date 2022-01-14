@@ -20,11 +20,13 @@ function LocationSearch() {
 function CheckInOutDateSearch() {
   const [dateStart, setDateStart] = useState();
   const [dateEnd, setDateEnd] = useState();
+
   useEffect(() => {}, []);
+
   return <div></div>;
 }
 
-function HeadCountSearch() {
+function HeadCountSearch(props) {
   const [adultsCount, setAdultsCount] = useState(0);
   const [childrenCount, setChildrenCount] = useState(0);
   const [infantsCount, setInfantsCount] = useState(0);
@@ -33,10 +35,11 @@ function HeadCountSearch() {
 
   useEffect(() => {
     setSumAdultsChildrenCount(adultsCount + childrenCount);
+    props.setHeadCount(sumAdultsChildrenCount);
   }, [adultsCount, childrenCount]);
 
   return (
-    <div className="bg white rounded">
+    <div className="bg-white rounded">
       <div className="border-y-1 border-gray-300">
         <div className="">{"성인"}</div>
         <button
@@ -111,7 +114,8 @@ function MainSearchBar() {
   const [location, setLocation] = useState("");
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setChectOutDate] = useState("");
-  const [headCount, setHeadCount] = useState("");
+  const [headCount, setHeadCount] = useState(0);
+  //Pop-up state
   const [popState, setPopState] = useState({
     location: false,
     checkIn: false,
@@ -147,41 +151,49 @@ function MainSearchBar() {
   };
 
   return (
-    <div className="bg-white ">
-      <div classNmae="bg-white ">
+    <div className="max-w-4xl bg-white content-center">
+      <div classNmae="flex flex-no-wrap bg-white">
         <TextField
+          className="max-w-xs rounded-lg hover:shadow-md"
           label="위치"
           variant="standard"
           onClick={onClickLocationSearch}
         ></TextField>
         <TextField
+          className="max-w-xs rounded-lg hover:shadow-md"
           label="체크인"
           variant="standard"
           onClick={onClickCheckInSearch}
         ></TextField>
         <TextField
+          className="max-w-xs rounded-lg hover:shadow-md"
           label="체크아웃"
           variant="standard"
           onClick={setChectOutDate}
         ></TextField>
         <TextField
+          className="max-w-xs rounded-xl hover:shadow-md"
           label="인원"
           variant="standard"
+          disabled
           onClick={onClickHeadCountSearch}
+          value={`${headCount} 명`}
         ></TextField>
-        <button>검색</button>
+        <button className="rounded-lg bg-red-400">검색</button>
       </div>
       {popState.location ? <LocationSearch /> : null}
       {popState.checkIn ? <CheckInOutDateSearch /> : null}
       {popState.checkOut ? <CheckInOutDateSearch /> : null}
-      {popState.headCount ? <HeadCountSearch /> : null}
+      {popState.headCount ? (
+        <HeadCountSearch setHeadCount={setHeadCount} />
+      ) : null}
     </div>
   );
 }
 
 export default function MainPage() {
   return (
-    <div className="bg-black container 2xl-auto">
+    <div className="bg-black container 2xl">
       <MainSearchBar />
     </div>
   );
