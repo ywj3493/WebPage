@@ -1,5 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+  useContext,
+  createContext,
+  useReducer,
+} from "react";
 import { RangeDatePicker } from "../lib/DatePicker";
+
+export const MainSearchContext = createContext();
+
+const mainSearchStateReducer = (state, action) => {
+  const { location, checkInDate, checkOutDate, headCount } = state;
+  const { type, ...rest } = action;
+  switch (type) {
+    case "SET_STATE":
+      return { ...state, ...rest };
+    case "RESET_STATE":
+      return {
+        location: "",
+        checkInDate: null,
+        checkOutDate: null,
+        headCount: 0,
+      };
+    default:
+      return state;
+  }
+};
+
+const MainSearchContextProvider = ({ children }) => {
+  const [mainSearchState, mainSearchStateDispatch] = useReducer(
+    mainSearchStateReducer,
+    {
+      location: "",
+      checkInDate: null,
+      checkOutDate: null,
+      headCount: 0,
+    }
+  );
+  return (
+    <MainSearchContext.Provider
+      value={{ mainSearchStateDispatch, mainSearchState }}
+    >
+      {children}
+    </MainSearchContext.Provider>
+  );
+};
 
 function LocationSearch() {
   const [locations, setLocations] = useState([]);
@@ -19,26 +64,20 @@ function LocationSearch() {
   );
 }
 
-function CheckInOutDateSearch() {
-  const [dateStart, setDateStart] = useState();
-  const [dateEnd, setDateEnd] = useState();
-
-  useEffect(() => {}, []);
-
-  const today = new Date();
-  return <RangeDatePicker date={today}></RangeDatePicker>;
-}
-
 function HeadCountSearch(props) {
   const [adultsCount, setAdultsCount] = useState(0);
   const [childrenCount, setChildrenCount] = useState(0);
   const [infantsCount, setInfantsCount] = useState(0);
   const [petsCount, setPetsCount] = useState(0);
-  const [sumAdultsChildrenCount, setSumAdultsChildrenCount] = useState(0);
+
+  const { mainSearchState, mainSearchStateDispatch } =
+    useContext(MainSearchContext);
 
   useEffect(() => {
-    setSumAdultsChildrenCount(adultsCount + childrenCount);
-    props.setHeadCount(sumAdultsChildrenCount);
+    mainSearchStateDispatch({
+      type: "SET_STATE",
+      headCount: adultsCount + childrenCount,
+    });
   }, [adultsCount, childrenCount]);
 
   return (
@@ -133,17 +172,15 @@ function HeadCountSearch(props) {
             +
           </button>
         </div>
-        <div>{`총 ${sumAdultsChildrenCount} 명`}</div>
       </div>
     </div>
   );
 }
 
 function MainSearchBar() {
-  const [location, setLocation] = useState("");
-  const [checkInDate, setCheckInDate] = useState("");
-  const [checkOutDate, setCheckOutDate] = useState("");
-  const [headCount, setHeadCount] = useState(0);
+  const { mainSearchState, mainSearchStateDispatch } =
+    useContext(MainSearchContext);
+  const { location, checkInDate, checkOutDate, headCount } = mainSearchState;
   //Pop-up state
   const [popState, setPopState] = useState({
     location: false,
@@ -151,6 +188,7 @@ function MainSearchBar() {
     checkOut: false,
     headCount: false,
   });
+  const today = new Date();
 
   const onClickLocationSearch = () => {
     setPopState({
@@ -190,57 +228,58 @@ function MainSearchBar() {
 
   return (
     <>
-      <div className="flex-initial max-w-4xl bg-white justify-self-center rounded-lg">
-        <div className="flex flex-initial max-w-4xl bg-white content-center rounded-lg">
-          <div
-            className="max-w-xs rounded-lg flex-auto hover:shadow-md"
-            onClick={onClickLocationSearch}
-          >
-            <div>위치</div>
-            <input></input>
-          </div>
-          <div
-            className="max-w-xs rounded-lg flex-auto hover:shadow-md"
-            onClick={onClickCheckInSearch}
-          >
-            <div>체크인</div>
-            <input></input>
-          </div>
-          <div
-            className="max-w-xs rounded-lg flex-auto hover:shadow-md"
-            onClick={onClickCheckOutSearch}
-          >
-            <div>체크아웃</div>
-            <input></input>
-          </div>
-          <div
-            className="max-w-xs rounded-lg flex-auto hover:shadow-md"
-            onClick={onClickHeadCountSearch}
-          >
-            <div>인원</div>
-            <div>{`${headCount}명`}</div>
-          </div>
-          <button className="w-mb rounded-lg bg-red-400">검색</button>
+      <div className="flex flex-initial max-w-4xl bg-white justify-self-center rounded-lg">
+        {/* <div className="flex flex-initial max-w-4xl bg-white content-center rounded-lg"> */}
+        <div
+          className="max-w-xs rounded-lg flex-auto hover:shadow-md"
+          onClick={onClickLocationSearch}
+        >
+          <div>위치</div>
+          <input></input>
         </div>
+        <div
+          className="max-w-xs rounded-lg flex-auto hover:shadow-md"
+          onClick={onClickCheckInSearch}
+        >
+          <div>체크인</div>
+          <input></input>
+        </div>
+        <div
+          className="max-w-xs rounded-lg flex-auto hover:shadow-md"
+          onClick={onClickCheckOutSearch}
+        >
+          <div>체크아웃</div>
+          <input></input>
+        </div>
+        <div
+          className="max-w-xs rounded-lg flex-auto hover:shadow-md"
+          onClick={onClickHeadCountSearch}
+        >
+          <div>인원</div>
+          <div>{`${headCount}명`}</div>
+        </div>
+        <button className="w-mb rounded-lg bg-red-400">검색</button>
       </div>
+      {/* </div> */}
       {popState.location ? <LocationSearch /> : null}
       {popState.checkIn || popState.checkOut ? (
-        <CheckInOutDateSearch
+        <RangeDatePicker
+          date={today}
           isStartDate={popState.checkIn}
           isEndDate={popState.checkOut}
         />
       ) : null}
-      {popState.headCount ? (
-        <HeadCountSearch setHeadCount={setHeadCount} />
-      ) : null}
+      {popState.headCount ? <HeadCountSearch /> : null}
     </>
   );
 }
 
 export default function MainPage() {
   return (
-    <div className="bg-black container justify-center">
-      <MainSearchBar />
-    </div>
+    <MainSearchContextProvider>
+      <div className="bg-black container justify-center">
+        <MainSearchBar />
+      </div>
+    </MainSearchContextProvider>
   );
 }
