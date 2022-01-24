@@ -1,8 +1,19 @@
 module.exports = {
   mode: "jit",
-  content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
-    extend: {},
+    extend: {
+      width: {
+        mb: "1.625rem",
+        "500px": "31.25rem",
+      },
+      height: {
+        mb: "1.625rem",
+      },
+    },
     screens: {
       sm: "640px",
       // => @media (min-width: 640px) { ... }
