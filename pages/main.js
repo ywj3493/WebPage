@@ -61,16 +61,13 @@ function LocationSearch(props) {
   };
 
   return (
-    <div clasName={props.clasName}>
-      <div
-        className="max-w-xs rounded-lg flex-auto hover:shadow-md"
-        onClick={onClickLocationSearch}
-      >
-        <div>위치</div>
+    <div className={props.className} ref={outsideRef}>
+      <div className="mx-6 my-2 h-[100%]" onClick={onClickLocationSearch}>
+        <div className="text-xs">위치</div>
         <input></input>
       </div>
       {popState ? (
-        <div className="w-500px bg-white p-3 my-3 rounded-2xl" ref={outsideRef}>
+        <div className="absolute w-[500px] my-3 px-6 bg-white rounded-3xl">
           {locations.map((value, idx) => (
             <div key={`LocationSearch_${idx}`} className="">
               {value}
@@ -104,17 +101,14 @@ function HeadCountSearch(props) {
   }, [adultsCount, childrenCount]);
 
   return (
-    <div className={props.clasName}>
-      <div
-        className="max-w-xs rounded-lg flex-auto hover:shadow-md"
-        onClick={onClickHeadCountSearch}
-      >
+    <div className={props.className}>
+      <div className="mx-6 my-2" onClick={onClickHeadCountSearch}>
         <div>인원</div>
-        <div>{`${headCount}명`}</div>
+        <input className="w-[100%]" value={`${headCount}명`} readOnly></input>
       </div>
       {popState ? (
         <div
-          className="w-96 p-3 my-3 justify-self-end bg-white rounded-2xl z-10"
+          className="absolute w-96 p-3 my-3 justify-self-end bg-white rounded-3xl z-10"
           ref={outsideRef}
         >
           <div className="border-y-1 border-gray-200">
@@ -219,18 +213,18 @@ function MainSearchBar() {
     useContext(MainSearchContext);
 
   return (
-    <>
-      <div className="flex flex-initial max-w-4xl h-12 bg-white justify-self-center rounded-lg">
-        {/* <div className="flex flex-initial max-w-4xl bg-white content-center rounded-lg"> */}
-        <LocationSearch></LocationSearch>
-        <RangeDatePicker
-          startName="체크인"
-          endName="체크아웃"
-        ></RangeDatePicker>
-        <HeadCountSearch></HeadCountSearch>
-        <button className="w-mb rounded-lg bg-red-400">검색</button>
-      </div>
-    </>
+    <div className="flex h-[64px] w-[848px] bg-white justify-self-center rounded-full">
+      <LocationSearch className="flex-initial w-[270px] rounded-full hover:shadow-md"></LocationSearch>
+      <div className="w-px mx-1 my-4 bg-slate-400"></div>
+      <RangeDatePicker
+        className="flex-initial w-[360px] rounded-full"
+        startName="체크인"
+        endName="체크아웃"
+      ></RangeDatePicker>
+      <div className="w-px mx-1 my-4 bg-slate-400"></div>
+      <HeadCountSearch className="flex-initial w-[170px] rounded-full hover:shadow-md"></HeadCountSearch>
+      <button className="m-1 w-[60px] rounded-full bg-red-400">검색</button>
+    </div>
   );
 }
 
