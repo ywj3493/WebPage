@@ -62,12 +62,15 @@ function LocationSearch(props) {
 
   return (
     <div className={props.className} ref={outsideRef}>
-      <div className="mx-6 my-2 h-[100%]" onClick={onClickLocationSearch}>
-        <div className="text-xs">위치</div>
+      <div
+        className="flex flex-col mx-6 my-2 h-[100%]"
+        onClick={onClickLocationSearch}
+      >
+        <text className="text-xs">위치</text>
         <input></input>
       </div>
       {popState ? (
-        <div className="absolute w-[500px] my-3 px-6 bg-white rounded-3xl">
+        <div className="absolute w-[500px] px-6 bg-white rounded-3xl">
           {locations.map((value, idx) => (
             <div key={`LocationSearch_${idx}`} className="">
               {value}
@@ -103,12 +106,12 @@ function HeadCountSearch(props) {
   return (
     <div className={props.className}>
       <div className="mx-6 my-2" onClick={onClickHeadCountSearch}>
-        <div>인원</div>
-        <input className="w-[100%]" value={`${headCount}명`} readOnly></input>
+        <text className="text-xs">인원</text>
+        <div className="text-xs">{headCount}명</div>
       </div>
       {popState ? (
         <div
-          className="absolute w-96 p-3 my-3 justify-self-end bg-white rounded-3xl z-10"
+          className="relative top-[1rem] right-[150px] w-96 p-3 my-3 justify-self-end bg-white rounded-3xl z-10"
           ref={outsideRef}
         >
           <div className="border-y-1 border-gray-200">
@@ -213,11 +216,11 @@ function MainSearchBar() {
     useContext(MainSearchContext);
 
   return (
-    <div className="flex h-[64px] w-[848px] bg-white justify-self-center rounded-full">
+    <div className="flex h-[64px] w-[848px] bg-white rounded-full">
       <LocationSearch className="flex-initial w-[270px] rounded-full hover:shadow-md"></LocationSearch>
       <div className="w-px mx-1 my-4 bg-slate-400"></div>
       <RangeDatePicker
-        className="flex-initial w-[360px] rounded-full"
+        className="flex-initial w-[360px] rounded-full place-content-center"
         startName="체크인"
         endName="체크아웃"
       ></RangeDatePicker>
