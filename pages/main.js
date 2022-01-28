@@ -231,7 +231,7 @@ function MainSearchBar() {
 export default function MainPage() {
   return (
     <MainSearchContextProvider>
-      <div className="bg-black container justify-center">
+      <div className="flex w-[100%] h-[100%] bg-black place-content-center">
         <MainSearchBar />
       </div>
     </MainSearchContextProvider>
