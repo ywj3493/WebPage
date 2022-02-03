@@ -13,6 +13,9 @@ module.exports = {
       height: {
         mb: "1.625rem",
       },
+      transitionProperty: {
+        height: "height",
+      },
     },
     screens: {
       sm: "640px",

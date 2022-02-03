@@ -1,16 +1,28 @@
-import { Layout } from "../components/Layout";
 import "../styles/globals.css";
 import React from "react";
 import { Provider } from "next-auth/client";
+import { useMediaQuery } from "react-responsive";
+import MobileLayout from "../components/Layout/MobileLayout";
+import PCLayout from "../components/Layout/PCLayout";
 
 function MyApp({ Component, pageProps }) {
+  const isMobile = useMediaQuery({
+    maxWidth: 768,
+  });
+
   return (
     //cover layout with Provider=>allows use of next-auth/client session hook and functions
 
     <Provider session={pageProps.session}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      {isMobile ? (
+        <MobileLayout>
+          <Component {...pageProps} />
+        </MobileLayout>
+      ) : (
+        <PCLayout>
+          <Component {...pageProps} />
+        </PCLayout>
+      )}
     </Provider>
   );
 }
