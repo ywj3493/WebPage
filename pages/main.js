@@ -215,6 +215,8 @@ function MainSearchBar() {
   const { mainSearchState, mainSearchStateDispatch } =
     useContext(MainSearchContext);
 
+  const onClickSearch = () => {};
+
   return (
     <div className="flex h-[64px] w-[848px] bg-white rounded-full">
       <LocationSearch className="flex-initial w-[270px] rounded-full hover:shadow-md"></LocationSearch>
@@ -223,10 +225,17 @@ function MainSearchBar() {
         className="flex-initial w-[360px] rounded-full place-content-center"
         startName="체크인"
         endName="체크아웃"
+        startState={mainSearchState.startDate}
+        endState={mainSearchState.endDate}
       ></RangeDatePicker>
       <div className="w-px mx-1 my-4 bg-slate-400"></div>
       <HeadCountSearch className="flex-initial w-[170px] rounded-full hover:shadow-md"></HeadCountSearch>
-      <button className="m-1 w-[60px] rounded-full bg-red-400">검색</button>
+      <button
+        className="m-1 w-[60px] rounded-full bg-red-400"
+        onClick={onClickSearch}
+      >
+        검색
+      </button>
     </div>
   );
 }
