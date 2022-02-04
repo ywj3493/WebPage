@@ -212,21 +212,13 @@ function HeadCountSearch(props) {
 }
 
 function MainSearchBar() {
-  const { mainSearchState, mainSearchStateDispatch } =
-    useContext(MainSearchContext);
-
-  useEffect(() => {});
+  const [location, setLocation] = useState("");
+  const [checkInDate, setCheckInDate] = useState(null);
+  const [checkOutDate, setCheckOutDate] = useState(null);
+  const [headCount, setHeadCount] = useState(0);
 
   const onClickSearch = () => {
-    console.dir(mainSearchState.endDate);
-  };
-
-  const setEndDate = (value) => {
-    console.dir("setEndDate");
-    mainSearchStateDispatch(mainSearchState, {
-      type: "SET_STATE",
-      endDate: value,
-    });
+    console.dir(checkInDate);
   };
 
   return (
@@ -238,10 +230,13 @@ function MainSearchBar() {
         startName="체크인"
         endName="체크아웃"
         startState={{
-          startDate: mainSearchState.startDate,
-          setStartDate: mainSearchStateDispatch(mainSearchState, {}),
+          startDate: checkInDate,
+          setStartDate: (value) => setCheckInDate(value),
         }}
-        endState={{ endDate: mainSearchState.endDate, setEndDate: setEndDate }}
+        endState={{
+          endDate: checkOutDate,
+          setEndDate: (value) => setCheckOutDate(value),
+        }}
       ></RangeDatePicker>
       <div className="w-px mx-1 my-4 bg-slate-400"></div>
       <HeadCountSearch className="flex-initial w-[170px] rounded-full hover:shadow-md"></HeadCountSearch>
@@ -257,10 +252,8 @@ function MainSearchBar() {
 
 export default function MainPage() {
   return (
-    <MainSearchContextProvider>
-      <div className="flex w-[100%] h-[100%] bg-black place-content-center">
-        <MainSearchBar />
-      </div>
-    </MainSearchContextProvider>
+    <div className="flex w-[100%] h-[100%] bg-black place-content-center">
+      <MainSearchBar />
+    </div>
   );
 }
