@@ -10,46 +10,10 @@ import { RangeDatePicker, useOutsideClick } from "../lib/DatePicker";
 
 export const MainSearchContext = createContext();
 
-const mainSearchStateReducer = (state, action) => {
-  const { location, checkInDate, checkOutDate, headCount } = state;
-  const { type, ...rest } = action;
-  switch (type) {
-    case "SET_STATE":
-      return { ...state, ...rest };
-    case "RESET_STATE":
-      return {
-        location: "",
-        checkInDate: null,
-        checkOutDate: null,
-        headCount: 0,
-      };
-    default:
-      return state;
-  }
-};
-
-const MainSearchContextProvider = ({ children }) => {
-  const [mainSearchState, mainSearchStateDispatch] = useReducer(
-    mainSearchStateReducer,
-    {
-      location: "",
-      checkInDate: null,
-      checkOutDate: null,
-      headCount: 0,
-    }
-  );
-  return (
-    <MainSearchContext.Provider
-      value={{ mainSearchStateDispatch, mainSearchState }}
-    >
-      {children}
-    </MainSearchContext.Provider>
-  );
-};
-
 function LocationSearch(props) {
   const [locations, setLocations] = useState([1, 2, 3]);
   const [popState, setPopState] = useState(false);
+  const {location, setLocation} = props.locationState;
 
   const outsideRef = useRef(null);
   useOutsideClick(outsideRef, () => {
@@ -60,6 +24,11 @@ function LocationSearch(props) {
     setPopState(true);
   };
 
+  const onClickLocationResult = (value) => {
+    setLocation(value);
+    setPopState(false);
+  }
+
   return (
     <div className={props.className} ref={outsideRef}>
       <div
@@ -67,12 +36,12 @@ function LocationSearch(props) {
         onClick={onClickLocationSearch}
       >
         <text className="text-xs">위치</text>
-        <input></input>
+        <input value={location}></input>
       </div>
       {popState ? (
         <div className="absolute w-[500px] px-6 bg-white rounded-3xl">
           {locations.map((value, idx) => (
-            <div key={`LocationSearch_${idx}`} className="">
+            <div key={`LocationSearch_${idx}`} className="" onClick={onClickLocationResult}>
               {value}
             </div>
           ))}
@@ -88,7 +57,8 @@ function HeadCountSearch(props) {
   const [childrenCount, setChildrenCount] = useState(0);
   const [infantsCount, setInfantsCount] = useState(0);
   const [petsCount, setPetsCount] = useState(0);
-  const [headCount, setHeadCount] = useState(0);
+  // const [headCount, setHeadCount] = useState(0);
+  const {headCount, setHeadCount} = props.headCountState;
 
   const outsideRef = useRef(null);
   useOutsideClick(outsideRef, () => {
@@ -218,12 +188,12 @@ function MainSearchBar() {
   const [headCount, setHeadCount] = useState(0);
 
   const onClickSearch = () => {
-    console.dir(checkInDate);
+    console.dir(`위치 : ${location}, 체크인 : ${checkInDate}, 체크아웃 : ${checkOutDate}, 인원 : ${headCount}`)
   };
 
   return (
     <div className="flex h-[64px] w-[848px] bg-white rounded-full">
-      <LocationSearch className="flex-initial w-[270px] rounded-full hover:shadow-md"></LocationSearch>
+      <LocationSearch className="flex-initial w-[270px] rounded-full hover:shadow-md" locationState={{location: location, setLocation: setLocation}}></LocationSearch>
       <div className="w-px mx-1 my-4 bg-slate-400"></div>
       <RangeDatePicker
         className="flex-initial w-[360px] rounded-full place-content-center"
@@ -239,7 +209,7 @@ function MainSearchBar() {
         }}
       ></RangeDatePicker>
       <div className="w-px mx-1 my-4 bg-slate-400"></div>
-      <HeadCountSearch className="flex-initial w-[170px] rounded-full hover:shadow-md"></HeadCountSearch>
+      <HeadCountSearch className="flex-initial w-[170px] rounded-full hover:shadow-md" headCountState={{headCount: headCount, setHeadCount: setHeadCount}}></HeadCountSearch>
       <button
         className="m-1 w-[60px] rounded-full bg-red-400"
         onClick={onClickSearch}
