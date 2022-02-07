@@ -250,9 +250,33 @@ function MainSearchBar() {
   );
 }
 
+function MainGNB() {
+  const onClickIcon = () => {};
+  return (
+    <div className="flex w-[100%] h[80px] bg-white">
+      <div className="">
+        <button className="w-[120px]" onClick={onClickIcon}>
+          C&Y
+        </button>
+      </div>
+      <div className="flex-none w-[348px] h-[48px]">
+        <span className="p-1">숙소</span>
+        <span className="p-1">체험</span>
+        <span className="p-1">온라인 체험</span>
+      </div>
+      <div>
+        <button className="w-[120px]">호스트 되기</button>
+        <button className="w-[40px]">◎</button>
+        <div className="flex"></div>
+      </div>
+    </div>
+  );
+}
+
 export default function MainPage() {
   return (
-    <div className="flex w-[100%] h-[100%] bg-black place-content-center">
+    <div className="flex flex-col w-[100%] h-[100%] bg-black place-content-center">
+      <MainGNB />
       <MainSearchBar />
     </div>
   );
