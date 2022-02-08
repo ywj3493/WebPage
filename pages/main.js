@@ -13,7 +13,7 @@ export const MainSearchContext = createContext();
 function LocationSearch(props) {
   const [locations, setLocations] = useState([1, 2, 3]);
   const [popState, setPopState] = useState(false);
-  const {location, setLocation} = props.locationState;
+  const { location, setLocation } = props.locationState;
 
   const outsideRef = useRef(null);
   useOutsideClick(outsideRef, () => {
@@ -27,7 +27,7 @@ function LocationSearch(props) {
   const onClickLocationResult = (value) => {
     setLocation(value);
     setPopState(false);
-  }
+  };
 
   return (
     <div className={props.className} ref={outsideRef}>
@@ -41,7 +41,11 @@ function LocationSearch(props) {
       {popState ? (
         <div className="absolute w-[500px] px-6 bg-white rounded-3xl">
           {locations.map((value, idx) => (
-            <div key={`LocationSearch_${idx}`} className="" onClick={onClickLocationResult}>
+            <div
+              key={`LocationSearch_${idx}`}
+              className=""
+              onClick={onClickLocationResult}
+            >
               {value}
             </div>
           ))}
@@ -58,7 +62,7 @@ function HeadCountSearch(props) {
   const [infantsCount, setInfantsCount] = useState(0);
   const [petsCount, setPetsCount] = useState(0);
   // const [headCount, setHeadCount] = useState(0);
-  const {headCount, setHeadCount} = props.headCountState;
+  const { headCount, setHeadCount } = props.headCountState;
 
   const outsideRef = useRef(null);
   useOutsideClick(outsideRef, () => {
@@ -188,15 +192,20 @@ function MainSearchBar() {
   const [headCount, setHeadCount] = useState(0);
 
   const onClickSearch = () => {
-    console.dir(`위치 : ${location}, 체크인 : ${checkInDate}, 체크아웃 : ${checkOutDate}, 인원 : ${headCount}`)
+    console.dir(
+      `위치 : ${location}, 체크인 : ${checkInDate}, 체크아웃 : ${checkOutDate}, 인원 : ${headCount}`
+    );
   };
 
   return (
-    <div className="flex h-[64px] w-[848px] bg-white rounded-full">
-      <LocationSearch className="flex-initial w-[270px] rounded-full hover:shadow-md" locationState={{location: location, setLocation: setLocation}}></LocationSearch>
+    <div className="flex h-[64px] w-[848px] bg-white rounded-full self-center">
+      <LocationSearch
+        className="flex-initial w-[270px] rounded-full hover:shadow-md"
+        locationState={{ location: location, setLocation: setLocation }}
+      ></LocationSearch>
       <div className="w-px mx-1 my-4 bg-slate-400"></div>
       <RangeDatePicker
-        className="flex-initial w-[360px] rounded-full place-content-center"
+        className="flex flex-initial flex-col w-[360px] rounded-full"
         startName="체크인"
         endName="체크아웃"
         startState={{
@@ -209,7 +218,10 @@ function MainSearchBar() {
         }}
       ></RangeDatePicker>
       <div className="w-px mx-1 my-4 bg-slate-400"></div>
-      <HeadCountSearch className="flex-initial w-[170px] rounded-full hover:shadow-md" headCountState={{headCount: headCount, setHeadCount: setHeadCount}}></HeadCountSearch>
+      <HeadCountSearch
+        className="flex-initial w-[170px] rounded-full hover:shadow-md"
+        headCountState={{ headCount: headCount, setHeadCount: setHeadCount }}
+      ></HeadCountSearch>
       <button
         className="m-1 w-[60px] rounded-full bg-red-400"
         onClick={onClickSearch}
@@ -223,21 +235,21 @@ function MainSearchBar() {
 function MainGNB() {
   const onClickIcon = () => {};
   return (
-    <div className="flex w-[100%] h[80px] bg-white">
-      <div className="">
-        <button className="w-[120px]" onClick={onClickIcon}>
+    <div className="flex w-[100%] h[80px] bg-white justify-center">
+      <div className="flex flex-start w-[100%]">
+        <button className="flex-start w-[120px]" onClick={onClickIcon}>
           C&Y
         </button>
       </div>
-      <div className="flex-none w-[348px] h-[48px]">
+      <div className="flex-initial w-[348px] h-[48px] self-center">
         <span className="p-1">숙소</span>
         <span className="p-1">체험</span>
         <span className="p-1">온라인 체험</span>
       </div>
-      <div>
-        <button className="w-[120px]">호스트 되기</button>
-        <button className="w-[40px]">◎</button>
-        <div className="flex"></div>
+      <div className="flex flex-end w-[100%]">
+        <button className="flex-end w-[120px]">호스트 되기</button>
+        <button className="flex-end w-[40px]">◎</button>
+        <div className="flex-end"></div>
       </div>
     </div>
   );
@@ -245,7 +257,7 @@ function MainGNB() {
 
 export default function MainPage() {
   return (
-    <div className="flex flex-col w-[100%] h-[100%] bg-black place-content-center">
+    <div className="flex flex-col w-[100%] h-[100%] bg-black content-center">
       <MainGNB />
       <MainSearchBar />
     </div>
