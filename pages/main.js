@@ -95,15 +95,15 @@ function HeadCountSearch(props) {
                 <div>만 13세 이상</div>
               </div>
               <button
-                className="w-mb h-mb rounded-full border"
+                className="flex-none w-[26px] h-[26px] rounded-full border self-center"
                 disabled={adultsCount == 0}
                 onClick={() => setAdultsCount(adultsCount - 1)}
               >
                 -
               </button>
-              <div>{adultsCount}</div>
+              <div className="mx-1 self-center">{adultsCount}</div>
               <button
-                className="w-mb rounded-full border"
+                className="flex-none w-[26px] h-[26px] rounded-full border self-center"
                 onClick={() => setAdultsCount(adultsCount + 1)}
               >
                 +
@@ -118,15 +118,15 @@ function HeadCountSearch(props) {
                 <div>만 2~12세</div>
               </div>
               <button
-                class="w-mb rounded-full border"
+                className="flex-none w-[26px] h-[26px] rounded-full border self-center"
                 disabled={childrenCount == 0}
                 onClick={() => setChildrenCount(childrenCount - 1)}
               >
                 -
               </button>
-              <div>{childrenCount}</div>
+              <div className="mx-1 self-center">{childrenCount}</div>
               <button
-                class="w-mb rounded-full border"
+                className="flex-none w-[28px] h-[28px] rounded-full border self-center"
                 onClick={() => setChildrenCount(childrenCount + 1)}
               >
                 +
@@ -141,15 +141,15 @@ function HeadCountSearch(props) {
                 <div>만 2세 미만</div>
               </div>
               <button
-                class="w-mb rounded-full border"
+                className="flex-none w-[26px] h-[26px] rounded-full border self-center"
                 disabled={infantsCount == 0}
                 onClick={() => setInfantsCount(infantsCount - 1)}
               >
                 -
               </button>
-              <div>{infantsCount}</div>
+              <div className="mx-1 self-center">{infantsCount}</div>
               <button
-                class="w-mb rounded-full border"
+                className="flex-none w-[26px] h-[26px] rounded-full border self-center"
                 onClick={() => setInfantsCount(infantsCount + 1)}
               >
                 +
@@ -164,15 +164,15 @@ function HeadCountSearch(props) {
                 <div>도우미 반려동물을 동반하시나요?</div>
               </div>
               <button
-                class="w-mb rounded-full border"
+                class="flex-none w-[26px] h-[26px] rounded-full border self-center"
                 disabled={petsCount == 0}
                 onClick={() => setPetsCount(petsCount - 1)}
               >
                 -
               </button>
-              <div>{petsCount}</div>
+              <div className="mx-1 self-center">{petsCount}</div>
               <button
-                class="w-mb rounded-full border"
+                class="flex-none w-[26px] h-[26px] rounded-full border self-center"
                 onClick={() => setPetsCount(petsCount + 1)}
               >
                 +
@@ -198,14 +198,14 @@ function MainSearchBar() {
   };
 
   return (
-    <div className="flex h-[64px] w-[848px] bg-white rounded-full self-center">
+    <div className="flex flex-initial h-[64px] w-[850px] bg-white rounded-full self-center">
       <LocationSearch
         className="flex-initial w-[270px] rounded-full hover:shadow-md"
         locationState={{ location: location, setLocation: setLocation }}
       ></LocationSearch>
       <div className="w-px mx-1 my-4 bg-slate-400"></div>
       <RangeDatePicker
-        className="flex flex-initial flex-col w-[360px] rounded-full"
+        className="flex flex-initial flex-col w-[360px] rounded-full content-center"
         startName="체크인"
         endName="체크아웃"
         startState={{
@@ -233,33 +233,45 @@ function MainSearchBar() {
 }
 
 function MainGNB() {
+  const [isDown, setIsDown] = useState(false);
+  const [selectedTab, setSelectedTab] = useState(0);
   const onClickIcon = () => {};
+
   return (
-    <div className="flex w-[100%] h[80px] bg-white justify-center">
-      <div className="flex flex-start w-[100%]">
-        <button className="flex-start w-[120px]" onClick={onClickIcon}>
-          C&Y
-        </button>
+    <>
+      <div className="flex w-[100%] h-[80px] px-[80px] justify-between bg-white z-50">
+        <div className="flex">
+          <button className="flex-start w-[120px]" onClick={onClickIcon}>
+            C&Y
+          </button>
+        </div>
+        <div className="flex flex-initial w-[348px] h-[48px] justify-evenly self-center">
+          <span className="p-1 content-center border-b-2 border-black">
+            숙소
+          </span>
+          <span className="p-1 content-center border-b-2 border-black">
+            체험
+          </span>
+          <span className="p-1 content-center border-b-2 border-black">
+            온라인 체험
+          </span>
+        </div>
+        <div className="flex">
+          <button className="w-[120px]">호스트 되기</button>
+          <button className="w-[40px]">◎</button>
+          <div className=""></div>
+        </div>
       </div>
-      <div className="flex-initial w-[348px] h-[48px] self-center">
-        <span className="p-1">숙소</span>
-        <span className="p-1">체험</span>
-        <span className="p-1">온라인 체험</span>
-      </div>
-      <div className="flex flex-end w-[100%]">
-        <button className="flex-end w-[120px]">호스트 되기</button>
-        <button className="flex-end w-[40px]">◎</button>
-        <div className="flex-end"></div>
-      </div>
-    </div>
+      <MainSearchBar />
+    </>
   );
 }
 
 export default function MainPage() {
   return (
-    <div className="flex flex-col w-[100%] h-[100%] bg-black content-center">
+    <div className="flex flex-auto flex-col w-[100%] h-[2000px] bg-black content-center">
       <MainGNB />
-      <MainSearchBar />
+      <div className="flex flex-initial my-[30px] w-[1600px] h-[800px] bg-green-300 self-center"></div>
     </div>
   );
 }
