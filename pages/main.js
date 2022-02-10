@@ -246,13 +246,13 @@ function MainGNB() {
           </button>
         </div>
         <div className="flex flex-initial w-[348px] h-[48px] justify-evenly self-center">
-          <span className="p-1 content-center border-b-2 border-black">
+          <span className="m-1 p-1 content-center border-b-2 border-black">
             숙소
           </span>
-          <span className="p-1 content-center border-b-2 border-black">
+          <span className="m-1 p-1 content-center border-b-2 border-black">
             체험
           </span>
-          <span className="p-1 content-center border-b-2 border-black">
+          <span className="m-1 p-1 content-center border-b-2 border-black">
             온라인 체험
           </span>
         </div>
@@ -269,9 +269,12 @@ function MainGNB() {
 
 export default function MainPage() {
   return (
-    <div className="flex flex-auto flex-col w-[100%] h-[2000px] bg-black content-center">
-      <MainGNB />
-      <div className="flex flex-initial my-[30px] w-[1600px] h-[800px] bg-green-300 self-center"></div>
-    </div>
+    <>
+      <div className="flex flex-col w-[100%] bg-black">
+        <MainGNB />
+        <div className="flex shrink my-[30px] w-[1600px] h-[800px] bg-green-300 self-center"></div>
+      </div>
+      <div className=""></div>
+    </>
   );
 }
