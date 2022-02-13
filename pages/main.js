@@ -7,6 +7,7 @@ import React, {
   useRef,
 } from "react";
 import { RangeDatePicker, useOutsideClick } from "../lib/DatePicker";
+import { ReactComponent as Globe } from "../images/globe.svg";
 
 export const MainSearchContext = createContext();
 
@@ -232,6 +233,15 @@ function MainSearchBar() {
   );
 }
 
+function SmallMainSearchBar() {
+  return (
+    <div
+      className="flex flex-initial w-[850px] h-[64px] bg-white rounded-full self-center
+    "
+    ></div>
+  );
+}
+
 function MainGNB() {
   const [isDown, setIsDown] = useState(false);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -267,12 +277,20 @@ function MainGNB() {
   );
 }
 
+function MainPicture() {
+  return (
+    <div className="flex flex-initial m-[30px] w-[100%] h-[800px] self-center">
+      <div className="flex flex-initial mx-[30px] w-[1600px] h-[800px] bg-green-300 self-center"></div>
+    </div>
+  );
+}
+
 export default function MainPage() {
   return (
     <>
       <div className="flex flex-col w-[100%] bg-black">
         <MainGNB />
-        <div className="flex shrink my-[30px] w-[1600px] h-[800px] bg-green-300 self-center"></div>
+        <MainPicture />
       </div>
       <div className=""></div>
     </>
