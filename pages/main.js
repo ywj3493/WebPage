@@ -7,6 +7,7 @@ import React, {
   useRef,
 } from "react";
 import { RangeDatePicker, useOutsideClick } from "../lib/DatePicker";
+import { classnames } from "tailwindcss-classnames";
 import { ReactComponent as Globe } from "../images/globe.svg";
 
 export const MainSearchContext = createContext();
@@ -235,10 +236,14 @@ function MainSearchBar() {
 
 function SmallMainSearchBar() {
   return (
-    <div
-      className="flex flex-initial w-[850px] h-[64px] bg-white rounded-full self-center
-    "
-    ></div>
+    <div className="flex flex-initial w-[850px] h-[64px] bg-white rounded-full self-center">
+      <button
+        className="m-1 w-[60px] rounded-full bg-red-400"
+        onClick={onClickSearch}
+      >
+        검색
+      </button>
+    </div>
   );
 }
 
@@ -249,20 +254,44 @@ function MainGNB() {
 
   return (
     <>
-      <div className="flex w-[100%] h-[80px] px-[80px] justify-between bg-white z-50">
+      <div
+        className={classnames(
+          `flex w-[100%] h-[80px] px-[80px] justify-between z-50 ${
+            isDown ? `bg-white ` : ``
+          }`
+        )}
+      >
         <div className="flex">
           <button className="flex-start w-[120px]" onClick={onClickIcon}>
             C&Y
           </button>
         </div>
         <div className="flex flex-initial w-[348px] h-[48px] justify-evenly self-center">
-          <span className="m-1 p-1 content-center border-b-2 border-black">
+          <span
+            className={classnames(
+              `m-1 p-1 content-center border-b-2 text-white ${
+                selectedTab == 0 ? `border-white` : `border-black`
+              }`
+            )}
+          >
             숙소
           </span>
-          <span className="m-1 p-1 content-center border-b-2 border-black">
+          <span
+            className={classnames(
+              `m-1 p-1 content-center border-b-2 text-white ${
+                selectedTab == 1 ? `border-white` : `border-black`
+              }`
+            )}
+          >
             체험
           </span>
-          <span className="m-1 p-1 content-center border-b-2 border-black">
+          <span
+            className={classnames(
+              `m-1 p-1 content-center border-b-2 text-white ${
+                selectedTab == 2 ? `border-white` : `border-black`
+              }`
+            )}
+          >
             온라인 체험
           </span>
         </div>
@@ -279,8 +308,49 @@ function MainGNB() {
 
 function MainPicture() {
   return (
-    <div className="flex flex-initial m-[30px] w-[100%] h-[800px] self-center">
-      <div className="flex flex-initial mx-[30px] w-[1600px] h-[800px] bg-green-300 self-center"></div>
+    <div className="flex flex-initial m-[30px] w-[100%] h-[800px] self-center justify-center">
+      <div className="flex flex-initial mx-[30px] w-[1600px] h-[800px] bg-green-300"></div>
+    </div>
+  );
+}
+
+function MainCard(props) {
+  /**
+   * TODO : 카드 클릭해서 여행지 검색 되도록 하는 함수 추가
+   */
+  const onClickCard = () => {};
+  return (
+    <div className={classnames(props.className)} onClick={onClickCard}>
+      <div className="flex w-full h-[50%]"></div>
+      <div className="flex flex-col px-[16px] py[24px] w-full h-[50%] font-sans text-white">
+        <div className="flex w-full text-[35px]">{props.cardName}</div>
+        <div className="flex w-full text-[20px]">font test</div>
+      </div>
+    </div>
+  );
+}
+
+function MainCardBoard() {
+  const [cardList, setCardList] = useState([]);
+
+  useEffect(() => {
+    setCardList([`서울`, `인천`, `대구`, `대전`]);
+  }, []);
+
+  return (
+    <div
+      className={`flex flex-initial w-[100%] bg-white self-center justify-between`}
+    >
+      {cardList.map((value, idx) => (
+        <div className={`flex flex-initial w-[100%] m-[2]`}>
+          <MainCard
+            className={`flex flex-col flex-initial w-[100%] aspect-[3/4] rounded-2xl bg-red-${
+              300 + idx * 100
+            }`}
+            cardName={value}
+          ></MainCard>
+        </div>
+      ))}
     </div>
   );
 }
@@ -288,11 +358,24 @@ function MainPicture() {
 export default function MainPage() {
   return (
     <>
-      <div className="flex flex-col w-[100%] bg-black">
+      <div className="flex flex-col w-full bg-black">
         <MainGNB />
         <MainPicture />
+        <div className="flex flex-initial mx-[30px] w-[100%] h-[700px] bg-white self-center justify-center">
+          <div className="flex flex-col flex-initial mx-[30px] pt-[96px] w-[1600px] bg-green-300">
+            <div className="text-[42px] font-bold font-sans">
+              설레는 다음 여행을 위한 아이디어
+            </div>
+            <MainCardBoard />
+          </div>
+        </div>
+        <div className="flex flex-col w-full h-[1200px] bg-white">
+          <div className="flex flex-col"></div>
+        </div>
+        <div className="flex flex-col w-full h-[848px] bg-white">
+          <div className="flex flex-col"></div>
+        </div>
       </div>
-      <div className=""></div>
     </>
   );
 }
