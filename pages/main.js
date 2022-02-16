@@ -253,10 +253,16 @@ function MainGNB() {
   const onClickIcon = () => {};
 
   return (
-    <>
+    <div
+      className={classnames(
+        `flex flex-col w-[100%] justify-center z-50 ${
+          isDown ? `bg-white ` : ``
+        }`
+      )}
+    >
       <div
         className={classnames(
-          `flex w-[100%] h-[80px] px-[80px] justify-between z-50 ${
+          `flex w-[100%] h-[80px] px-[80px] justify-between text-white ${
             isDown ? `bg-white ` : ``
           }`
         )}
@@ -269,7 +275,7 @@ function MainGNB() {
         <div className="flex flex-initial w-[348px] h-[48px] justify-evenly self-center">
           <span
             className={classnames(
-              `m-1 p-1 content-center border-b-2 text-white ${
+              `m-1 p-1 content-center border-b-2 ${
                 selectedTab == 0 ? `border-white` : `border-black`
               }`
             )}
@@ -278,7 +284,7 @@ function MainGNB() {
           </span>
           <span
             className={classnames(
-              `m-1 p-1 content-center border-b-2 text-white ${
+              `m-1 p-1 content-center border-b-2 ${
                 selectedTab == 1 ? `border-white` : `border-black`
               }`
             )}
@@ -287,7 +293,7 @@ function MainGNB() {
           </span>
           <span
             className={classnames(
-              `m-1 p-1 content-center border-b-2 text-white ${
+              `m-1 p-1 content-center border-b-2 ${
                 selectedTab == 2 ? `border-white` : `border-black`
               }`
             )}
@@ -302,7 +308,7 @@ function MainGNB() {
         </div>
       </div>
       <MainSearchBar />
-    </>
+    </div>
   );
 }
 
