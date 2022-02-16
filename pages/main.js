@@ -309,7 +309,7 @@ function MainGNB() {
 function MainPicture() {
   return (
     <div className="flex flex-initial m-[30px] w-[100%] h-[800px] self-center justify-center">
-      <div className="flex flex-initial mx-[30px] w-[1600px] h-[800px] bg-green-300"></div>
+      <div className="flex flex-initial mx-[30px] w-[1600px] h-[800px] rounded-2xl bg-green-300"></div>
     </div>
   );
 }
@@ -334,7 +334,12 @@ function MainCardBoard() {
   const [cardList, setCardList] = useState([]);
 
   useEffect(() => {
-    setCardList([`서울`, `인천`, `대구`, `대전`]);
+    setCardList([
+      { cardName: `서울`, cardColor: `bg-red-300` },
+      { cardName: `인천`, cardColor: `bg-red-400` },
+      { cardName: `대구`, cardColor: `bg-red-500` },
+      { cardName: `대전`, cardColor: `bg-red-600` },
+    ]);
   }, []);
 
   return (
@@ -342,12 +347,12 @@ function MainCardBoard() {
       className={`flex flex-initial w-[100%] bg-white self-center justify-between`}
     >
       {cardList.map((value, idx) => (
-        <div className={`flex flex-initial w-[100%] m-[2]`}>
+        <div className={`flex flex-initial w-[100%] m-[8px]`}>
           <MainCard
-            className={`flex flex-col flex-initial w-[100%] aspect-[3/4] rounded-2xl bg-red-${
-              300 + idx * 100
-            }`}
-            cardName={value}
+            className={classnames(
+              `flex flex-col flex-initial w-[100%] aspect-[3/4] rounded-2xl ${value.cardColor}`
+            )}
+            cardName={value.cardName}
           ></MainCard>
         </div>
       ))}
@@ -362,18 +367,64 @@ export default function MainPage() {
         <MainGNB />
         <MainPicture />
         <div className="flex flex-initial mx-[30px] w-[100%] h-[700px] bg-white self-center justify-center">
-          <div className="flex flex-col flex-initial mx-[30px] pt-[96px] w-[1600px] bg-green-300">
-            <div className="text-[42px] font-bold font-sans">
+          <div className="flex flex-col flex-initial mx-[30px] pt-[96px] w-[1600px]">
+            <div className="p-[8px] text-[42px] font-bold font-sans">
               설레는 다음 여행을 위한 아이디어
             </div>
             <MainCardBoard />
           </div>
         </div>
-        <div className="flex flex-col w-full h-[1200px] bg-white">
-          <div className="flex flex-col"></div>
+        <div className="flex flex-initial mx-[30px] w-[100%] h-[1200px] bg-white self-center justify-center">
+          <div className="flex flex-col flex-initial mx-[30px] pt-[96px] w-[1600px]">
+            <div className="p-[8px] text-[42px] font-bold font-sans">
+              체험 둘러보기
+            </div>
+            <div
+              className={`flex flex-initial w-[100%] bg-white self-center justify-between`}
+            >
+              <div className={`flex flex-initial w-[100%] m-[8px]`}>
+                <div
+                  className={classnames(
+                    `flex flex-col flex-initial p-[80px] w-[100%] aspect-[7/8] rounded-2xl bg-green-300`
+                  )}
+                >
+                  <div
+                    className={`flex whitespace-pre-line text-white text-[54px]`}
+                  >
+                    {`여행 중 만나는\n이색적인 즐길 거리`}
+                  </div>
+                  <button
+                    className={`w-[80px] h-[48px] px-[24px] py-[14px] rounded-xl bg-white font-sans font-bold`}
+                  >
+                    체험
+                  </button>
+                </div>
+              </div>
+              <div className={`flex flex-initial w-[100%] m-[8px]`}>
+                <div
+                  className={classnames(
+                    `flex flex-col flex-initial p-[80px] w-[100%] aspect-[7/8] rounded-2xl bg-green-300`
+                  )}
+                >
+                  <div
+                    className={`flex whitespace-pre-line text-bold text-white text-[54px]`}
+                  >
+                    {`집에서 만나는\n다양한 즐길 거리`}
+                  </div>
+                  <button
+                    className={`w-[80px] h-[48px] px-[24px] py-[14px] rounded-xl bg-white font-sans font-bold`}
+                  >
+                    체험
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col w-full h-[848px] bg-white">
-          <div className="flex flex-col"></div>
+        <div className="flex flex-initial mx-[30px] w-[100%] bg-white self-center justify-center">
+          <div className="flex flex-col w-[1600px] h-[848px] rounded-2xl bg-green-300">
+            <div className="flex flex-col"></div>
+          </div>
         </div>
       </div>
     </>
