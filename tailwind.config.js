@@ -16,6 +16,42 @@ module.exports = {
       transitionProperty: {
         height: "height",
       },
+      keyframes: {
+        searchBoxShrink: {
+          "0%": {
+            width: "848px",
+            height: "64px",
+          },
+          "100%": {
+            width: "300px",
+            height: "48px",
+          },
+        },
+        searchBoxGrow: {
+          "0%": {
+            width: "300px",
+            height: "48px",
+          },
+          "100%": {
+            width: "848px",
+            height: "64px",
+          },
+        },
+        mainTabShrink: {
+          "0%": {
+            width: "100%",
+          },
+          "100%": {
+            width: "0%",
+            height: "0%",
+          },
+        },
+      },
+      animation: {
+        searchBoxShrink: "searchBoxShrink 0.5s ease-out",
+        searchBoxGrow: "searchBoxGrow 0.5s ease-out",
+        mainTabShrink: "mainTabShrink 0.5s ease-out",
+      },
     },
     screens: {
       sm: "640px",

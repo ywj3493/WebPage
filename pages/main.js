@@ -37,7 +37,7 @@ function LocationSearch(props) {
         className="flex flex-col mx-6 my-2 h-[100%]"
         onClick={onClickLocationSearch}
       >
-        <text className="text-xs">위치</text>
+        위치
         <input value={location}></input>
       </div>
       {popState ? (
@@ -82,7 +82,7 @@ function HeadCountSearch(props) {
   return (
     <div className={props.className}>
       <div className="mx-6 my-2" onClick={onClickHeadCountSearch}>
-        <text className="text-xs">인원</text>
+        인원
         <div className="text-xs">{headCount}명</div>
       </div>
       {popState ? (
@@ -225,20 +225,7 @@ function MainSearchBar() {
         headCountState={{ headCount: headCount, setHeadCount: setHeadCount }}
       ></HeadCountSearch>
       <button
-        className="m-1 w-[60px] rounded-full bg-red-400"
-        onClick={onClickSearch}
-      >
-        검색
-      </button>
-    </div>
-  );
-}
-
-function SmallMainSearchBar() {
-  return (
-    <div className="flex flex-initial w-[850px] h-[64px] bg-white rounded-full self-center">
-      <button
-        className="m-1 w-[60px] rounded-full bg-red-400"
+        className="m-1 rounded-full aspect-square bg-red-400"
         onClick={onClickSearch}
       >
         검색
@@ -248,22 +235,40 @@ function SmallMainSearchBar() {
 }
 
 function MainGNB() {
-  const [isDown, setIsDown] = useState(false);
+  const [isScrollTop, setIsScrollTop] = useState(true);
   const [selectedTab, setSelectedTab] = useState(0);
   const onClickIcon = () => {};
+
+  const onScrollMove = () => {
+    if (window.pageYOffset == 0) {
+      setIsScrollTop(true);
+      return;
+    } else if (isScrollTop === true) {
+      console.dir(`!isScrollTop`);
+      setIsScrollTop(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", onScrollMove);
+
+    return () => {
+      window.removeEventListener("scroll", onScrollMove);
+    };
+  }, []);
 
   return (
     <div
       className={classnames(
-        `flex flex-col w-[100%] justify-center z-50 ${
-          isDown ? `bg-white ` : ``
+        `fixed flex flex-col w-[100%] justify-center z-50 ${
+          !isScrollTop ? `bg-white` : `bg-black`
         }`
       )}
     >
       <div
         className={classnames(
-          `flex w-[100%] h-[80px] px-[80px] justify-between text-white ${
-            isDown ? `bg-white ` : ``
+          `flex w-[100%] h-[80px] px-[80px] justify-between transition-all duration-500 ${
+            !isScrollTop ? `bg-white text-black` : `bg-black text-white`
           }`
         )}
       >
@@ -272,7 +277,13 @@ function MainGNB() {
             C&Y
           </button>
         </div>
-        <div className="flex flex-initial w-[348px] h-[48px] justify-evenly self-center">
+        <div
+          className={classnames(
+            `flex flex-initial w-[348px] h-[48px] justify-evenly self-center ${
+              !isScrollTop ? `mainTabShrink` : ``
+            }`
+          )}
+        >
           <span
             className={classnames(
               `m-1 p-1 content-center border-b-2 ${
@@ -307,7 +318,21 @@ function MainGNB() {
           <div className=""></div>
         </div>
       </div>
-      <MainSearchBar />
+      {!isScrollTop ? (
+        <div
+          className={classnames(
+            `fixed flex flex-initial bg-white border-2 rounded-full self-center justify-end w-[300px] h-[48px] ${
+              !isScrollTop ? `animate-searchBoxShrink` : `animate-searchBoxGrow`
+            }`
+          )}
+        >
+          <button className="m-1 aspect-square rounded-full bg-red-400">
+            검색
+          </button>
+        </div>
+      ) : (
+        <MainSearchBar />
+      )}
     </div>
   );
 }
@@ -336,7 +361,7 @@ function MainCard(props) {
   );
 }
 
-function MainCardBoard() {
+function MainCardBoard(props) {
   const [cardList, setCardList] = useState([]);
 
   useEffect(() => {
@@ -349,19 +374,27 @@ function MainCardBoard() {
   }, []);
 
   return (
-    <div
-      className={`flex flex-initial w-[100%] bg-white self-center justify-between`}
-    >
-      {cardList.map((value, idx) => (
-        <div className={`flex flex-initial w-[100%] m-[8px]`}>
-          <MainCard
-            className={classnames(
-              `flex flex-col flex-initial w-[100%] aspect-[3/4] rounded-2xl ${value.cardColor}`
-            )}
-            cardName={value.cardName}
-          ></MainCard>
+    <div className="flex flex-initial mx-[30px] w-[100%] bg-white self-center justify-center">
+      <div className="flex flex-col flex-initial mx-[30px] pt-[96px] w-[1600px]">
+        <div className="p-[8px] text-[42px] font-bold font-sans">
+          {props.boardName}
         </div>
-      ))}
+        <div
+          className={`flex flex-initial w-[100%] bg-white self-center justify-between`}
+        >
+          {cardList.map((value, idx) => (
+            <div className={`flex flex-initial w-[100%] m-[8px]`}>
+              <MainCard
+                className={classnames(
+                  `flex flex-col flex-initial w-[100%] aspect-[3/4] rounded-2xl ${value.cardColor}`
+                )}
+                cardName={value.cardName}
+                key={`mainCard_${idx}`}
+              ></MainCard>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
@@ -370,16 +403,10 @@ export default function MainPage() {
   return (
     <>
       <div className="flex flex-col w-full bg-black">
+        <div className="flex w-full h-[144px]"></div>
         <MainGNB />
         <MainPicture />
-        <div className="flex flex-initial mx-[30px] w-[100%] h-[700px] bg-white self-center justify-center">
-          <div className="flex flex-col flex-initial mx-[30px] pt-[96px] w-[1600px]">
-            <div className="p-[8px] text-[42px] font-bold font-sans">
-              설레는 다음 여행을 위한 아이디어
-            </div>
-            <MainCardBoard />
-          </div>
-        </div>
+        <MainCardBoard boardName="설레는 다음 여행을 위한 아이디어" />
         <div className="flex flex-initial mx-[30px] w-[100%] h-[1200px] bg-white self-center justify-center">
           <div className="flex flex-col flex-initial mx-[30px] pt-[96px] w-[1600px]">
             <div className="p-[8px] text-[42px] font-bold font-sans">
