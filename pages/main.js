@@ -34,7 +34,7 @@ function LocationSearch(props) {
   return (
     <div className={props.className} ref={outsideRef}>
       <div
-        className="flex flex-col mx-6 my-2 h-[100%]"
+        className="flex flex-initial flex-col mx-6 my-2 h-[100%]"
         onClick={onClickLocationSearch}
       >
         위치
@@ -200,14 +200,14 @@ function MainSearchBar() {
   };
 
   return (
-    <div className="flex flex-initial h-[64px] w-[850px] bg-white rounded-full self-center">
+    <div className="flex flex-initial w-[850px] bg-white rounded-full mx-[30px]">
       <LocationSearch
-        className="flex-initial w-[270px] rounded-full hover:shadow-md"
+        className="flex flex-col flex-initial w-[31%] rounded-full hover:shadow-md"
         locationState={{ location: location, setLocation: setLocation }}
       ></LocationSearch>
       <div className="w-px mx-1 my-4 bg-slate-400"></div>
       <RangeDatePicker
-        className="flex flex-initial flex-col w-[360px] rounded-full content-center"
+        className="flex flex-col flex-initial w-[42%] rounded-full content-center"
         startName="체크인"
         endName="체크아웃"
         startState={{
@@ -221,7 +221,7 @@ function MainSearchBar() {
       ></RangeDatePicker>
       <div className="w-px mx-1 my-4 bg-slate-400"></div>
       <HeadCountSearch
-        className="flex-initial w-[170px] rounded-full hover:shadow-md"
+        className="flex-initial w-[18%] rounded-full hover:shadow-md"
         headCountState={{ headCount: headCount, setHeadCount: setHeadCount }}
       ></HeadCountSearch>
       <button
@@ -279,7 +279,7 @@ function MainGNB() {
         </div>
         <div
           className={classnames(
-            `flex flex-initial w-[348px] h-[48px] justify-evenly self-center ${
+            `flex flex-initial w-[350px] h-[48px] justify-evenly self-center ${
               !isScrollTop ? `mainTabShrink` : ``
             }`
           )}
@@ -331,7 +331,9 @@ function MainGNB() {
           </button>
         </div>
       ) : (
-        <MainSearchBar />
+        <div className="flex flex-initial w-[100%] h-[64px] self-center justify-center">
+          <MainSearchBar />
+        </div>
       )}
     </div>
   );
