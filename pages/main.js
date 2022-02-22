@@ -33,15 +33,12 @@ function LocationSearch(props) {
 
   return (
     <div className={props.className} ref={outsideRef}>
-      <div
-        className="flex flex-initial flex-col mx-6 my-2 h-[100%]"
-        onClick={onClickLocationSearch}
-      >
-        위치
-        <input value={location}></input>
+      <div className="mx-6 my-2 w-full h-full" onClick={onClickLocationSearch}>
+        <text className="text-xs">위치</text>
+        <div className="text-xs">{location}</div>
       </div>
       {popState ? (
-        <div className="absolute w-[500px] px-6 bg-white rounded-3xl">
+        <div className="relative top-[24px] w-96 p-3 my-3 bg-white rounded-3xl z-10">
           {locations.map((value, idx) => (
             <div
               key={`LocationSearch_${idx}`}
@@ -82,7 +79,7 @@ function HeadCountSearch(props) {
   return (
     <div className={props.className}>
       <div className="mx-6 my-2" onClick={onClickHeadCountSearch}>
-        인원
+        <text className="text-xs">인원</text>
         <div className="text-xs">{headCount}명</div>
       </div>
       {popState ? (
@@ -207,7 +204,7 @@ function MainSearchBar() {
       ></LocationSearch>
       <div className="w-px mx-1 my-4 bg-slate-400"></div>
       <RangeDatePicker
-        className="flex flex-col flex-initial w-[42%] rounded-full content-center"
+        className="flex flex-col flex-initial w-[42%] content-center"
         startName="체크인"
         endName="체크아웃"
         startState={{
