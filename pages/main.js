@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { RangeDatePicker, useOutsideClick } from "../lib/DatePicker";
 import { classnames } from "tailwindcss-classnames";
-import { ReactComponent as Globe } from "../images/globe.svg";
+import { ReactComponent as Globe } from "../images/globe-solid.svg";
 
 export const MainSearchContext = createContext();
 
